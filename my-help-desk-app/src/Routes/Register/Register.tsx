@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { auth } from "../../firebase"
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 function Register() {
   const [email, setEmail] = useState<string>("");
@@ -11,13 +12,13 @@ function Register() {
 
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("HANDLESUMBIT REGISTER")
 
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password).then((user)=>{
 
       if (user) {
         console.log("inside of user");
+        console.log(user.user.email)
         navigate('/create');
       }
 
@@ -63,9 +64,9 @@ function Register() {
       </div>
 
       <div className="d-grid">
-        <button type="submit" className="btn btn-primary">
+        <Button type="submit" className="btn btn-primary">
           Sign Up
-        </button>
+        </Button>
       </div>
       <p className="forgot-password text-right">
         Already registered <a href="/login">Login</a>

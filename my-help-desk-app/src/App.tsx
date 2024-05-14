@@ -1,8 +1,8 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Login from "./Routes/LoginRegister/Login";
-import Register from "./Routes/LoginRegister/Register";
+import Login from "./Routes/Login/Login";
+import Register from "./Routes/Register/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./Context/AuthProvider";

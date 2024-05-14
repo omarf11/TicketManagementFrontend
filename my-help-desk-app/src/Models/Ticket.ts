@@ -1,14 +1,14 @@
 import Message from "./Message";
 
-enum TicketStatus {
+export enum TicketStatus {
     NEW,
     IN_PROGRESS,
     RESOLVED,
   }
 
   export default interface Ticket {
-    ticketId: number;
-    userId: number;
+    ticketId: string;
+    userId?: string;
     engineerId?: number | null;
     ticketStatus: TicketStatus;
     description: string;

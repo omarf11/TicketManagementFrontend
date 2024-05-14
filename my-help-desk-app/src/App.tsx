@@ -3,11 +3,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Login from "./Routes/LoginRegister/Login";
 import Register from "./Routes/LoginRegister/Register";
-import UserView from "./Routes/UserView/UserView";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./Context/AuthProvider";
 import PrivateRoute from "./Routes/PrivateRoutes";
+import UserViewContainer from "./Routes/UserView/UserViewContainer";
 
 function App() {
   const router = createBrowserRouter([
@@ -24,7 +24,7 @@ function App() {
       path: "/create",
       element: (
         <PrivateRoute>
-          <UserView />
+          <UserViewContainer />
         </PrivateRoute>
       ),
     },

@@ -25,9 +25,7 @@ export default function UserTabs() {
       try {
         if (user) {
           const ticketsData = await TicketService.getUsersTickets(user.email);
-          setTickets(ticketsData);
-          console.log("TIckets are set: " , tickets.length)
-  
+          setTickets(ticketsData);  
         }
        
         setLoading(false);

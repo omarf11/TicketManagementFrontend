@@ -19,6 +19,18 @@ class TicketService {
       throw new Error("Failed to fetch tickets");
     }
   }
+  static async getAllTickets(): Promise<Ticket[]> {
+    try {
+    
+      const response = await axios.get(this.URL);
+      const data: Ticket[] = response.data;
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
+      throw new Error("Failed to fetch tickets");
+    }
+  }
 
   static async createTicket(newTicket: Ticket): Promise<Ticket> {
     try {

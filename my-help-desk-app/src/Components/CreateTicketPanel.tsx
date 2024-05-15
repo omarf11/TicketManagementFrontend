@@ -8,13 +8,16 @@ import {
 import Ticket, { TicketStatus } from "../Models/Ticket";
 import { v4 as uuidv4 } from "uuid";
 import { AuthContext } from "../Context/AuthProvider";
+import TicketService from "../Api/TicketService";
+import { toast } from "react-toastify";
+import './CreateTicketPanel.css'
 
 
-interface Props {
-  onSubmit: (ticket: Ticket) => void;
+type Props = {
+    fetchUsersTickets: () => Promise<void>;
 }
 
-const CreateTicketPanel: React.FC<Props> = ({ onSubmit }) => {
+const CreateTicketPanel: React.FC<Props> = ({fetchUsersTickets} ) => {
     const {user} = useContext(AuthContext);
 
   const [formData, setFormData] = useState<Ticket>({
@@ -24,7 +27,10 @@ const CreateTicketPanel: React.FC<Props> = ({ onSubmit }) => {
     ticketStatus: TicketStatus.NEW,
     description: "",
     messages: [],
+    createdAt: new Date().toISOString()
   });
+
+
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,22 +42,38 @@ const CreateTicketPanel: React.FC<Props> = ({ onSubmit }) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Check if userId and ticketId are set
     if (formData.userId !== "0" && formData.ticketId !== "0") {
-      onSubmit(formData);
-    } else {
-      alert("Please fill in User ID and Ticket ID.");
-    }
+      await TicketService.createTicket(formData);
+      toast.success(`Ticket ${formData.ticketId} created successfully`, {
+        position: "top-center",
+      });
+      
+      setFormData({
+        ticketId: uuidv4() , 
+        userId: user!.email ?? undefined, 
+        engineerId: null,
+        ticketStatus: TicketStatus.NEW,
+        description: "",
+        messages: [],
+        createdAt: new Date().toISOString()
+      });
+
+    fetchUsersTickets();
+    } 
   };
 
   return (
     <div className="CreateTicketPanel">
       <Container maxWidth="sm">
-        <Typography variant="h4" align="center" gutterBottom>
-          Create Ticket
+        <div className="CreateTicketPanel__title">
+        <Typography variant="h6" align="left" gutterBottom>
+          Please describe your Issue:
         </Typography>
+        </div>
+        
         <form onSubmit={handleSubmit}>
           <TextField
             name="description"

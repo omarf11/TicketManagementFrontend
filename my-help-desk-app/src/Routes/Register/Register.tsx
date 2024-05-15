@@ -1,77 +1,81 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../../firebase"
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Typography, TextField, Container, Link } from "@mui/material";
+import './Register.css';
 
-function Register() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const Register = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-
+  const handleRegister = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(auth, email, password).then((user)=>{
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
       if (user) {
-        console.log("inside of user");
-        console.log(user.user.email)
-        navigate('/create');
+        navigate("/create");
       }
-
-      console.log("User Registered Successfully!");
-      
       toast.success("User Registered Successfully!", {
         position: "top-center",
       });
-
-    })
-    .catch((error)=>{
+    } catch (error:any) {
       console.log(error.message);
       toast.error(error.message, {
         position: "bottom-center",
       });
-    });
+    }
   };
 
   return (
-    <form onSubmit={(e)=>handleRegister(e)}>
-      <h3>Register</h3>
-
-      <div className="mb-3">
-        <label>Email address</label>
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+    <Container component="main" maxWidth="xs" >
+      <div className="RegisterContainer">
+        <div className="RegisterTitle">
+        <Typography variant="h4">
+          Register to TicketBot
+        </Typography>
+        </div>
+        <form onSubmit={(e) => handleRegister(e)}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            Sign Up
+          </Button>
+          <Link href="/login" variant="body2">
+            Already registered? Sign in
+          </Link>
+        </form>
       </div>
-
-      <div className="mb-3">
-        <label>Password</label>
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Enter password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="d-grid">
-        <Button type="submit" className="btn btn-primary">
-          Sign Up
-        </Button>
-      </div>
-      <p className="forgot-password text-right">
-        Already registered <a href="/login">Login</a>
-      </p>
-    </form>
+    </Container>
   );
-}
+};
+
 export default Register;

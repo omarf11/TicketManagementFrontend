@@ -1,9 +1,9 @@
 import Message from "./Message";
 
 export enum TicketStatus {
-    NEW,
-    IN_PROGRESS,
-    RESOLVED,
+    NEW = 'NEW',
+    IN_PROGRESS = 'IN_PROGRESS',
+    RESOLVED = 'RESOLVED',
   }
 
   export default interface Ticket {
@@ -13,5 +13,6 @@ export enum TicketStatus {
     ticketStatus: TicketStatus;
     description: string;
     messages?: Message[];
+    createdAt:string;
   }
   

@@ -1,19 +1,16 @@
 import React, { useContext } from "react";
 import { auth } from "../../firebase";
 import UserTabs from "../../Components/UserTabs";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { AuthContext } from "../../Context/AuthProvider";
+import "./UserViewContainer.css";
 
 export interface UserDetails {
   email: string;
 }
 
-
-
-
 const UserViewContainer: React.FC = () => {
-  
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -26,23 +23,22 @@ const UserViewContainer: React.FC = () => {
   };
 
   return (
-    <div>
-      {user ? (
+    <div className="UserViewContainer">
+      {user && (
         <>
-          <div style={{ display: "flex", justifyContent: "center" }}></div>
-          <h3>Welcome to TicketBot</h3>
-          <div>
-            <p>Email: {user.email}</p>
+          <div className="title">
+            <Typography variant="h5">Welcome To TicketBot</Typography>
+            <Button className="logoutButton" onClick={handleLogout}>
+              Logout
+            </Button>
           </div>
           <div>
-            <UserTabs/>
+            <p>{user.email}</p>
           </div>
-          <Button className="btn btn-primary" onClick={handleLogout}>
-            Logout
-          </Button>
+          <div>
+            <UserTabs />
+          </div>
         </>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );

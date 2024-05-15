@@ -1,47 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import Ticket from '../Models/Ticket';
-import TicketService from '../Api/TicketService';
+import React from "react";
+import Ticket from "../Models/Ticket";
+import { Card, CardContent, Typography } from "@mui/material";
+import './TicketList.css'
 
-const TicketList: React.FC = () => {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+type Props = {
+  tickets: Ticket[];
+  isLoading: boolean;
+};
 
-  const fetchTickets = async () => {
-    try {
-      const ticketsData = await TicketService.getAllTickets();
-      setTickets(ticketsData);
-      setLoading(false);
-    } catch (error) {
-      setError("Error fetching tickets. Please try again later.");
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTickets();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
+const TicketList: React.FC<Props> = ({ tickets, isLoading }) => {
   return (
-    <div>
-      <h1>Ticket List</h1>
+    <div className="TicketList">
       <ul>
-        {tickets.map(ticket => (
-          <li key={ticket.ticketId}>
-            <p>User ID: {ticket.userId}</p>
-            <p>Ticket Status: {ticket.ticketStatus}</p>
-            <p>Description: {ticket.description}</p>
-          </li>
+        {tickets.map((ticket) => (
+          <TicketCard ticket={ticket} key={ticket.ticketId}/>
         ))}
       </ul>
+    </div>
+  );
+};
+
+type TicketProps = {
+  ticket: Ticket;
+};
+const TicketCard: React.FC<TicketProps> = ({ ticket }) => {
+  return (
+    <div className="TicketCard">
+      <Card variant="outlined">
+        <CardContent>
+          <Typography variant="body1">
+            Ticket Id: {ticket.ticketId}
+            <br />
+            Created on: {ticket.createdAt}
+            <br />
+            User ID: {ticket.userId}
+            <br />
+            Ticket Status: {ticket.ticketStatus}
+            <br />
+            <br />
+            Description: 
+             <br />
+            {ticket.description}
+            <br />
+          </Typography>
+        </CardContent>
+      </Card>
     </div>
   );
 };

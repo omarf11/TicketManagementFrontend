@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./Context/AuthProvider";
 import PrivateRoute from "./Routes/PrivateRoutes";
 import UserViewContainer from "./Routes/UserView/UserViewContainer";
+import AdminContainer from "./Routes/Admin/Admin";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +29,14 @@ function App() {
         </PrivateRoute>
       ),
     },
+    {
+      path:"/admin",
+      element: (
+        <PrivateRoute>
+          <AdminContainer />
+        </PrivateRoute>
+      )
+    }
   ]);
 
   return (

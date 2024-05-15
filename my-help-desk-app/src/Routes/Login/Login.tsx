@@ -1,76 +1,107 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Typography,
+  TextField,
+  Container,
+  Grid,
+  Link,
+} from "@mui/material";
+import "./Login.css";
 
-function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("HANDLESUMBIT LOIGN")
     e.preventDefault();
 
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        console.log("User logged in Successfully: " , user);
+    try {
+      const userResults = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-        toast.success("User logged in Successfully", {
-          position: "top-center",
-        });
-        
-        navigate("/create");
-      })
-      .catch((error) => {
-        console.log(error.message);
-
-        toast.error(error.message, {
-          position: "bottom-center",
-        });
+      toast.success("User logged in Successfully", {
+        position: "top-center",
       });
+
+      if (userResults.user.email === "admin@ticketbot.com") {
+        navigate("/admin");
+      } else {
+        navigate("/create");
+      }
+    } catch (error: any) {
+      console.log(error.message);
+
+      toast.error(error.message, {
+        position: "bottom-center",
+      });
+    }
   };
 
   return (
-    <div className="Login">
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <h3>Login</h3>
-
-        <div className="Login_email">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <Container component="main" maxWidth="xs">
+      <div className="LoginContainer">
+        <div className="Login_Title">
+          <Typography variant="h4">Login to TicketBot</Typography>
         </div>
 
-        <div className="Login_password">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <div className="Login__submitBtn">
-          <Button type="submit" className="btn btn-primary">
-            Submit
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
           </Button>
-        </div>
-        <p className="Login__register">
-          New user <a href="/register">Register Here</a>
-        </p>
-      </form>
-    </div>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
-}
+};
 
 export default Login;

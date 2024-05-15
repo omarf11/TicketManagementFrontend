@@ -1,54 +1,44 @@
 import Ticket, { TicketStatus } from "../Models/Ticket";
 import API from "../constants/api";
-import axios from 'axios'
+import axios from "axios";
 
 class TicketService {
+  static URL = API.TICKET;
 
-static URL = API.TICKET;
-
-static async getAllTickets(): Promise<Ticket[]> {
+  static async getUsersTickets(userId: string | null): Promise<Ticket[]> {
     try {
-        const response  = await axios.get(this.URL)
-        const data:Ticket[] =response.data;
-        return data;
-    } catch (error) {
-        throw new Error("Failed to fetch tickets: ");
-    }
-}
+      if (!userId || userId.trim() === "") {
+        throw new Error("Invalid userId parameter");
+      }
+      const response = await axios.get(`${this.URL}/user/${userId}`);
+      const data: Ticket[] = response.data;
 
-static async getUsersTickets(userId:string): Promise<Ticket[]> {
+      return data;
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
+      throw new Error("Failed to fetch tickets");
+    }
+  }
+
+  static async createTicket(newTicket: Ticket): Promise<Ticket> {
     try {
-        const response  = await axios.get(this.URL)
-        const data:Ticket[] =response.data;
-        return data;
+      const response = await axios.post(this.URL, newTicket);
+      const data: Ticket = response.data;
+      return data;
     } catch (error) {
-        throw new Error("Failed to fetch tickets: ");
+      throw new Error("Failed to create tickets: ");
     }
-}
+  }
 
-static async createTicket( newTicket:Ticket): Promise<Ticket>{
-
+  static async updateTicketStatus(newStatus: TicketStatus): Promise<Ticket> {
     try {
-        const response  = await axios.get(this.URL)
-        const data:Ticket[] =response.data;
-        return data[-1];
+      const response = await axios.get(this.URL);
+      const data: Ticket[] = response.data;
+      return data[-1];
     } catch (error) {
-        throw new Error("Failed to fetch tickets: ");
+      throw new Error("Failed to update ticket status: ");
     }
-}
-static async updateTicketStatus(newStatus: TicketStatus): Promise<Ticket>{
-
-    try {
-        const response  = await axios.get(this.URL)
-        const data:Ticket[] =response.data;
-        return data[-1];
-    } catch (error) {
-        throw new Error("Failed to fetch tickets: ");
-    }
-}
-
-
-
+  }
 }
 
 export default TicketService;

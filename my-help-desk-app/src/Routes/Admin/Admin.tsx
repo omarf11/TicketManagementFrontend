@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../Context/AuthProvider";
+import React from "react";
 import { auth } from "../../firebase";
 import { Typography, Button } from "@mui/material";
 import AdminBoard from "../../Components/AdminBoard/AdminBoard";
@@ -10,7 +9,6 @@ const AdminContainer: React.FC = () => {
     try {
       await auth.signOut();
       window.location.href = "/login";
-      console.log("User logged out successfully!");
     } catch (error: any) {
       console.error("Error logging out:", error.message);
     }

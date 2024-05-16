@@ -42,11 +42,15 @@ class TicketService {
     }
   }
 
-  static async updateTicketStatus(newStatus: TicketStatus): Promise<Ticket> {
+  static async updateTicketStatus(ticketId:string, newStatus: TicketStatus): Promise<Ticket> {
     try {
-      const response = await axios.get(this.URL);
-      const data: Ticket[] = response.data;
-      return data[-1];
+      const response = await axios.put(`${this.URL}/${ticketId}/status`, null, {
+        params: {
+          newStatus: newStatus,
+        },
+      });
+        
+      return  response.data as Ticket;
     } catch (error) {
       throw new Error("Failed to update ticket status: ");
     }

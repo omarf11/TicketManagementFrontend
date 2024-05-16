@@ -1,0 +1,24 @@
+.Column{
+    background-color: #f4f5f7;
+    border-radius: 2.5px;
+    width: 20em;
+    height: 50em;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border: 1px solid gray;
+}
+.Column__Title{
+    padding: 8px;
+    background-color: burlywood;
+    text-align: center;
+}
+.Column__List{
+
+    padding: 3px;
+    transition: background-color 0.2s ease;
+    background-color: #f4f5f7;
+    flex-grow: 1;
+    min-height: 20%;
+
+}

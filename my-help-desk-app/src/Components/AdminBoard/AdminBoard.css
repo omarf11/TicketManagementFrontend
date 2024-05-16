@@ -1,0 +1,15 @@
+
+.AdminBoard{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    flex-direction: row;
+    padding-left: 21%;
+}
+.droppable{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-left: 2em;
+}

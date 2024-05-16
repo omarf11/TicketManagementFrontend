@@ -16,7 +16,6 @@ export default function UserTabs() {
 
     const [tickets, setTickets] = useState<Ticket[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
     const {user} = useContext(AuthContext);
   
   
@@ -30,7 +29,6 @@ export default function UserTabs() {
        
         setLoading(false);
       } catch (error) {
-        setError("Error fetching tickets. Please try again later.");
         setLoading(false);
       }
     };

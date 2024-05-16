@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TicketService from "../../Api/TicketService";
-import { AuthContext } from "../../Context/AuthProvider";
 import Ticket, { TicketStatus } from "../../Models/Ticket";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import "./AdminBoard.css";
@@ -11,13 +10,10 @@ const AdminBoard: React.FC = () => {
   const [inProgressTickets, setInProgressTickets] = useState<Ticket[]>([]);
   const [resolvedTickets, setResolvedTickets] = useState<Ticket[]>([]);
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const { user } = useContext(AuthContext);
+
 
   const fetchTickets = async () => {
     try {
-      setLoading(false);
       const ticketsData = await TicketService.getAllTickets();
 
       setInProgressTickets(
@@ -36,8 +32,7 @@ const AdminBoard: React.FC = () => {
         )
       );
     } catch (error) {
-      setError("Error fetching tickets. Please try again later.");
-      setLoading(false);
+
     }
   };
 

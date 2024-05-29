@@ -34,7 +34,7 @@ const Column: React.FC<Props> = ({ tickets, title, droppableId = "DEFAULT_ID" })
             }}
           >
             {tickets.map((ticket, index) => (
-                <AdminTicketCard ticket={ticket} index={index} key={ticket.ticketId}/>
+                <AdminTicketCard currTicket={ticket} index={index} key={ticket.ticketId}/>
             ))}
 
             {provided.placeholder}

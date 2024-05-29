@@ -132,3 +132,5 @@ dist
 # Mac
 .DS_Store
 ./node_modules
+.env
+/build

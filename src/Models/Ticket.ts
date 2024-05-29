@@ -8,6 +8,7 @@ export enum TicketStatus {
 
   export default interface Ticket {
     ticketId: string;
+    subject?:string;
     userId?: string;
     engineerId?: number | null;
     ticketStatus: TicketStatus;

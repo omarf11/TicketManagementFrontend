@@ -2,9 +2,9 @@ import React from "react";
 import { auth } from "../../firebase";
 import { Typography, Button } from "@mui/material";
 import AdminBoard from "../../Components/AdminBoard/AdminBoard";
+import './Admin.css';
 
 const AdminContainer: React.FC = () => {
-
   const handleLogout = async () => {
     try {
       await auth.signOut();
@@ -15,12 +15,18 @@ const AdminContainer: React.FC = () => {
   };
   return (
     <div className="AdminContainer">
-      <Typography variant="h5">Hello AdminBot</Typography>
-      <Button className="logoutButton" onClick={handleLogout}>
-        Logout
-      </Button>
-      <div>
-        <AdminBoard/>
+      <div className="AdminTitle">
+        <div className="AdminTitleText">
+        <Typography variant="h5">Hello AdminBot</Typography>
+        </div>
+        <div className="LogoutButton">
+        <Button className="logoutButton" onClick={handleLogout}>
+          Logout
+        </Button>
+        </div>
+      </div>
+      <div className="AdminContainerBody">
+        <AdminBoard />
       </div>
     </div>
   );

@@ -1,0 +1,13 @@
+.UserViewContainer{
+    min-width: 100vh;
+}
+.title{
+    display: flex;
+    margin: 1em;
+    padding-left: 2vh;
+    justify-content: space-between;
+}
+.UserViewContainerBody{
+
+
+}

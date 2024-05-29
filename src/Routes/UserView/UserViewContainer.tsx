@@ -27,15 +27,12 @@ const UserViewContainer: React.FC = () => {
       {user && (
         <>
           <div className="title">
-            <Typography variant="h5">Welcome To TicketBot</Typography>
+            <Typography variant="h5">Welcome {user.email}</Typography>
             <Button className="logoutButton" onClick={handleLogout}>
               Logout
             </Button>
           </div>
-          <div>
-            <p>{user.email}</p>
-          </div>
-          <div>
+          <div className="UserTabs">
             <UserTabs />
           </div>
         </>

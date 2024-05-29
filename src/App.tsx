@@ -22,7 +22,7 @@ function App() {
       element: <Register />,
     },
     {
-      path: "/create",
+      path: "/",
       element: (
         <PrivateRoute>
           <UserViewContainer />

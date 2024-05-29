@@ -8,7 +8,7 @@ import {getAuth} from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB7bSmoXdQrqmMfu7g2HnjNbGFER5sSqFo",
+  apiKey: `${process.env.REACT_APP_FIREBASE_APIKEY}`,
   authDomain: "ticketbot-51848.firebaseapp.com",
   projectId: "ticketbot-51848",
   storageBucket: "ticketbot-51848.appspot.com",

@@ -9,7 +9,6 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const {user} = useContext(AuthContext);
-  console.log(user && user.email === 'admin@ticketbot.com');
 
   if (!user) {
     return <Navigate to = "/login" replace/>

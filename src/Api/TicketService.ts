@@ -1,3 +1,4 @@
+import Message from "../Models/Message";
 import Ticket, { TicketStatus } from "../Models/Ticket";
 import API from "../constants/api";
 import axios from "axios";
@@ -52,8 +53,20 @@ class TicketService {
         
       return  response.data as Ticket;
     } catch (error) {
-      throw new Error("Failed to update ticket status: ");
+      throw new Error("Failed to update ticket status");
     }
+  }
+
+  static async addMessageToTicket(ticketId:string , newMessage:Message): Promise<Ticket> {
+
+    try {
+      const response = await axios.put(`${this.URL}/addMessage/${ticketId}` , newMessage);
+
+      return response.data as Ticket;
+    } catch (error) {
+      throw new Error("Failed to add message to Ticket");
+    }
+
   }
 }
 

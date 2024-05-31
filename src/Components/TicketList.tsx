@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   Chip,
-  Grid,
   Stack,
   Typography,
 } from "@mui/material";

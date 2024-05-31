@@ -35,7 +35,7 @@ const Login = () => {
       if (userResults.user.email === "admin@ticketbot.com") {
         navigate("/admin");
       } else {
-        navigate("/create");
+        navigate("/");
       }
     } catch (error: any) {
       console.log(error.message);

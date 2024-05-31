@@ -19,7 +19,7 @@ const Register = () => {
       const user = userCredential.user;
 
       if (user) {
-        navigate("/create");
+        navigate("/");
       }
       toast.success("User Registered Successfully!", {
         position: "top-center",
